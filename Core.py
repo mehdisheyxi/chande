@@ -21,7 +21,7 @@ if price:
 
     try:
         price_int = int(clean_price)
-        print(f'this is final OK:{price_int:,}')
+        print(f'this is final OK:{price_int:,}\n xobe ??!!')
     except ValueError:
         print(f'NOT OK:{clean_price}')
 else:
