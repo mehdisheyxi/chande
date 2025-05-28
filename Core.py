@@ -1,44 +1,34 @@
 import requests
 from bs4 import BeautifulSoup
-import fake_useragent
+from fake_useragent import UserAgent
 
+user_agent = UserAgent()
+ua = user_agent.random
 
-
-#create random user_agent for website
 url = 'https://www.tgju.org/'
 
-def get_prices(url):
-    class_name = [
-        'market-price',
-        'high',
-        'market-low',
-        'market-high',
-        'market-time'
-    ]
-    ua = fake_useragent.UserAgent()
-    headers = {'user-agent': ua.random}
+def get_price(url):
+    headers = {'User-Agent': ua}
     response = requests.get(url, headers=headers)
-    soap = BeautifulSoup(response.text,'html.parser')
-    price = soap.find_all('td',attrs={'class':class_name})
-    return price
-    # if price:
-    #     raw_price = price.text.strip()  # حذف فضای خالی اول و آخر
-    #     clean_price = raw_price.replace(',', '')
-    #
-    #     try:
-    #         price_int = int(clean_price)
-    #         return (f'this is final OK:{price_int:,}\n xobe ??!!')
-    #     except ValueError:
-    #         return (f'NOT OK:{clean_price}')
-    # else:
-    #     return ('NOT FOUND')
 
+    if response.status_code != 200:
+        return 'Error fetching data'
 
+    soup = BeautifulSoup(response.text, 'html.parser')
+    market_price = soup.find('td', class_='market-price')
+    market_low = soup.find('td', class_='market-low')
+    market_high = soup.find('td', class_='market-high')
 
+    if not (market_price and market_low and market_high):
+        return 'Data not found'
 
+    try:
+        price_int = int(market_price.text.strip().replace(',', ''))
+        low_int = int(market_low.text.strip().replace(',', ''))
+        high_int = int(market_high.text.strip().replace(',', ''))
 
+        return f'market-price = {price_int:,} low = {low_int:,} high = {high_int:,}'
+    except ValueError:
+        return 'Invalid data format'
 
-
-
-
-print(get_prices(url))
+print(get_price(url))
