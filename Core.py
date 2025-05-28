@@ -27,7 +27,9 @@ def get_price(url):
         low_int = int(market_low.text.strip().replace(',', ''))
         high_int = int(market_high.text.strip().replace(',', ''))
 
-        return f'market-price = {price_int:,} low = {low_int:,} high = {high_int:,}'
+        return f'market-price = {price_int:,}\n'\
+                f'low = {low_int:,}\n'\
+                f'high = {high_int:,}'
     except ValueError:
         return 'Invalid data format'
 
