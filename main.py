@@ -1,5 +1,6 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QMainWindow
 from PyQt5.uic import loadUi  # لود کردن فایل .ui
 
 class MyApp(QMainWindow):
