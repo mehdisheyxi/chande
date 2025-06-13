@@ -7,6 +7,10 @@ ua = user_agent.random
 
 url = 'https://www.tgju.org/'
 
+
+def refresh(url):
+    pass
+
 def get_price(url):
     headers = {'User-Agent': ua}
     response = requests.get(url, headers=headers)
@@ -27,10 +31,11 @@ def get_price(url):
         low_int = int(market_low.text.strip().replace(',', ''))
         high_int = int(market_high.text.strip().replace(',', ''))
 
-        return f'market-price = {price_int:,}\n'\
-                f'low = {low_int:,}\n'\
-                f'high = {high_int:,}'
+        return f'market-price = {price_int:,}\n' \
+               f'low = {low_int:,}\n' \
+               f'high = {high_int:,}'
     except ValueError:
         return 'Invalid data format'
+
 
 print(get_price(url))
