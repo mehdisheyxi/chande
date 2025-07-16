@@ -11,6 +11,11 @@ class MyApp(QMainWindow):
         loadUi("UI/main_window2.ui", self)  # نام فایل .ui را تنظیم کن
         self.setWindowTitle("chande")
         self.setWindowIcon(QIcon("logo/logochande.png"))
+        self.pushButton.clicked.connect(self.refresh)
+
+    def refresh(self):
+        pass
+
 
 
 if __name__ == "__main__":
